@@ -1,0 +1,243 @@
+#!/usr/bin/bash
+# We are checking if the given input is alphabets in user name and number in userID.  
+if [ $# = 2 ]
+then
+name=$1
+id=$2
+        if [[ $name =~ ^[0-9]+$ || $name =~ ^[0-9]*.[0-9]*$ ]]
+        then
+                echo "User name and userID must be alphabets and numebrs respectively."
+                echo "----------------------------------------------------------------"
+                echo "You should enter parameter 1 as a username and 2 as userID."
+                	exit
+	fi
+	if ! [[ $id =~ ^[0-9]+$ ]]
+	then
+	echo "Id cant be in decimal."
+	exit        
+	fi
+
+                echo -e "Enter the name of program:-\c" 
+			read program
+                
+		echo -e "------------------------>"
+else
+  echo "Enter the two parameters which are first name as Sun and ID as 2."
+exit
+fi
+
+
+#Using unknown access either numbers or words.
+welcome(){
+  i=0
+  a=4
+until [ ! $i -le 5 ]
+do
+    echo -e "Enter the secret key:\c" 
+    read -s key
+    echo ""
+    if [[ $key == "12" ]]
+      then
+      echo ""
+      echo -e "\t\t\t\t----WELCOME----"
+      echo ""
+      sleep 0.5
+      echo -e "\t\t\t\t--------------------------------"
+      echo -e "\t\t\t\t| Program name:-$program        "
+      echo -e "\t\t\t\t| ID:-$id                       "
+      echo -e "\t\t\t\t| Name:-$name                   "
+      echo -e "\t\t\t\t| Date:-$(date +%x)             "
+      echo -e "\t\t\t\t| Time:-$(date +%X)             "
+      echo -e "\t\t\t\t--------------------------------"
+      
+      countrys
+      selectcountry
+      splayers
+      playercount
+      break
+     
+#Giving four chances to enter the secret access.
+    elif [ $i == 4 ]
+    then
+     	echo -e "\n<-----Only 4 chances to enter a password----->\n"
+      	echo -e "\t\t----THANK YOU----"
+     	 exit
+    elif [ $key != $key ]
+    then
+    echo "Please choose a secret Key."
+    welcome
+    else
+      echo "Oh NO!"
+      echo "!!! Please enter correct password !!!"
+      i=`expr $i + 1`
+      n=`expr $a - $i`
+      echo "$n attempts left."
+    fi
+  done
+}
+
+#Displying Countries with its code you must select from.
+countrys(){
+  echo -e "\t\t\t\t+---------------+"
+  echo -e "\t\t\t\t| Country  |CODE|"
+  echo -e "\t\t\t\t+---------------+"
+  echo -e "\t\t\t\t|Brazil    | BRZ|"
+  echo -e "\t\t\t\t|Argentina | ARG|"
+  echo -e "\t\t\t\t|Nepal     | NEP|"
+  echo -e "\t\t\t\t|China     | CHI|"
+  echo -e "\t\t\t\t|England   | ENG|"
+  echo -e "\t\t\t\t+---------------+"
+}
+
+
+#Guessing best team  among the five countries.
+selectcountry(){
+  echo -e "Guess a country's code from above who has the best team:\c" 
+  	read country
+  echo "______________________________________________________________________"
+  case $country in
+    NEP|nep|ENG|eng|ARG|arg|CHI|chi)
+      echo "The football team has won the highest number of world cup among all other countries."
+      selectcountry
+      ;;
+    BRZ|brz)
+      echo "Yes,Brazil has won five world cups.In 1958, 1962, 1970, 1994 and 2002."
+      echo "______________________________________________________________________"
+      ;;
+    *)
+      echo "Please choose the given country's code"
+      selectcountry
+      ;;
+  esac
+}
+
+
+#Displaying best players with its codes.
+splayers(){
+        echo -e "\t\t\t\t+--------------------------+"
+        echo -e "\t\t\t\t|PLAYER          |   CODE  |"
+        echo -e "\t\t\t\t+--------------------------+"
+        echo -e "\t\t\t\t|Lionel Messi    |   LM    |"
+        echo -e "\t\t\t\t|Neymar Junior   |   NJ    |"
+        echo -e "\t\t\t\t|Kiran Chemjong  |   KC    |"
+        echo -e "\t\t\t\t|Zheng Zhi       |   ZZ    |"
+        echo -e "\t\t\t\t|Harry Kane      |   HK    |"
+        echo -e "\t\t\t\t+--------------------------+"
+}
+
+
+#Guessing the best players code among five and among those five only three has players information file 
+playerselection(){
+  PS3="---------------------------------------------------------------"
+  PS3="Choose a player from the from the given options (only numbers)."
+  	select player in  $1 $2 $3
+  	do
+  
+if [[ -z "$player" ]]
+  then
+        echo "------------------------------------------------"
+        echo "Oops! choose only from the given menu(Numbers)."
+        else
+                if [[ "$player" = "LM" ]]
+                then
+                        echo "You have choosen $player."
+                        cat LM
+                        break
+                elif [[ "$player" = "NJ" ]]
+                then
+                        echo "You have choosen $player."
+                        cat NJ
+                        break
+                elif [[ "$player" = "KC" ]]
+                then
+                        echo "You have choosen $player."
+                        cat KC
+                       break
+                elif  [[ "$player" != "LM" || "NJ" || "KC" ]]
+                then
+                        echo "----------------------------------------------------------------------"
+                        echo -e "The Player you have choosen doesn't hold any files in the program."
+                        again
+
+                fi
+                	
+        fi
+	
+  done
+  returnn
+}
+
+#Valadeting either the seleted player is from the LM,NJ,KC,ZZ,HK if not do again.
+playercount(){
+  echo -e "Select three players code (seperating by spaces and in capital letters):\c" 
+  	read p1 p2 p3
+  	nuplayers=( $p1 $p2 $p3 )
+  if [ ${#nuplayers[@]} -eq 3 ]
+  then
+  #making an array and putting it to the if else condition.
+        bestplayer=("LM NJ KC ZZ HK")
+
+        if [[ "${bestplayer[@]}" =~ "${p1}" && "${bestplayer[@]}" =~ "${p2}" && "${bestplayer[@]}" =~ "${p3}" ]]
+        then
+        	if [[ $p1 != $p2 && $p1 != $p3 && $p2 != $p1 && $p2 != $p3 && $p3 != $p1 && $p3 != $p2 ]]
+        	then
+                	echo "You have selected $p1-$p2-$p3."
+        	else
+                	echo "------------------------------------"
+			echo "A player cannot be chosen more then once."
+                	playercount
+        fi
+        else
+        	echo "---------------------------------------------"
+		echo -e "Players(CODE) from table can be only selected."
+                playercount
+        fi
+    playerselection $p1 $p2 $p3
+  else
+    	echo "-------------------------------------------"
+	echo "You should choose three players(Only CODE)."
+    playercount
+  fi
+}
+
+
+#Creating extra function to call all the need function when needed.
+again(){
+      countrys
+      selectcountry
+      splayers
+      playercount
+
+}
+
+#You get to choose if you want to continue the program again or not using while loop and case.
+returnn(){
+  echo "+----------------------------------------------+"
+  echo -e "Would you like to continue (Yes or No)?:\c" 
+ 	 read ans
+  while [[ $ans == "Yes" || "yes" ]]
+  do
+ 	 case $ans in
+  	Yes|yes) 
+  		again
+  		returnn
+  	;;
+  	No|no)
+  		echo -e "\t\t\t\t ---------"
+  		echo -e "\t\t\t\t|THANK YOU|"
+  		echo -e "\t\t\t\t ---------"
+  		exit
+  	;;
+  	*)
+  		echo "Please select Yes or No."
+  		returnn
+  	;;
+  	esac
+  done
+}
+welcome $1 $2
+/home/bishantgautam $exit
+exit
+
+Script done on 2021-04-09 19:53:34+05:45 [COMMAND_EXIT_CODE="0"]
+
